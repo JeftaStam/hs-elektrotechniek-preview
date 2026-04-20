@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="H&S Elektrotechniek – Uw betrouwbare elektricien in Dongen en omgeving. Storingen, installaties, zonnepanelen, keuringen en meer.">
+<title>H&S Elektrotechniek | Dongen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & VARIABLES ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Brand colours extracted from logo/vans: dark navy, bright blue, white */
+  --navy:       #0d1b2a;
+  --navy-mid:   #142233;
+  --navy-light: #1c2f42;
+  --blue:       #1a7fd4;
+  --blue-light: #3399e8;
+  --blue-dim:   #1260a8;
+  --white:      #ffffff;
+  --off-white:  #f4f7fa;
+  --gray-light: #e2e8ef;
+  --gray:       #8a9bb0;
+  --gray-dark:  #4a5a6a;
+  --text:       #1a2530;
+  --text-light: #5a6a7a;
+  --success:    #22c55e;
+  --error:      #ef4444;
+  --radius:     12px;
+  --radius-sm:  8px;
+  --shadow:     0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:  0 12px 48px rgba(0,0,0,0.16);
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+  --font-d: 'Barlow Condensed', sans-serif;
+  --font-b: 'Barlow', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-b); color: var(--text); background: var(--white); overflow-x: hidden; line-height: 1.6; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+.section-label {
+  font-family: var(--font-d);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--blue-light); display: block; margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-d);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800; line-height: 1.05; color: var(--navy);
+}
+.section-title.light { color: var(--white); }
+.section-intro { font-size: 17px; color: var(--text-light); max-width: 600px; margin-top: 16px; line-height: 1.7; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--radius-sm);
+  font-family: var(--font-d); font-size: 16px; font-weight: 700;
+  letter-spacing: 0.5px; cursor: pointer; transition: var(--transition);
+  border: none; text-decoration: none;
+}
+.btn-primary { background: var(--blue); color: var(--white); }
+.btn-primary:hover { background: var(--blue-dim); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,127,212,0.4); }
+.btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.35); }
+.btn-outline:hover { border-color: var(--blue-light); color: var(--blue-light); }
+.btn-dark { background: var(--navy); color: var(--white); }
+.btn-dark:hover { background: var(--navy-light); transform: translateY(-2px); }
+.btn-white { background: var(--white); color: var(--navy); }
+.btn-white:hover { background: var(--off-white); transform: translateY(-2px); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ===== NAVBAR ===== */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: transparent; transition: background 0.3s, box-shadow 0.3s;
+}
+#navbar.scrolled { background: var(--navy); box-shadow: 0 2px 24px rgba(0,0,0,0.35); }
+
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between; height: 74px;
+}
+
+.nav-logo img { height: 42px; width: auto; }
+
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a {
+  padding: 8px 14px; border-radius: 6px;
+  font-family: var(--font-d); font-size: 15px; font-weight: 600;
+  color: rgba(255,255,255,0.85); transition: var(--transition);
+}
+.nav-links a:hover { color: var(--blue-light); background: rgba(255,255,255,0.07); }
+.nav-cta { background: var(--blue) !important; color: var(--white) !important; padding: 8px 18px !important; }
+.nav-cta:hover { background: var(--blue-dim) !important; }
+
+.nav-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 8px; background: none; border: none;
+}
+.nav-toggle span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none; position: fixed; top: 74px; left: 0; right: 0;
+  background: var(--navy); padding: 16px 24px 28px; z-index: 999;
+  flex-direction: column; gap: 4px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  padding: 13px 16px; border-radius: 8px;
+  font-family: var(--font-d); font-size: 18px; font-weight: 600;
+  color: rgba(255,255,255,0.85); display: block; transition: var(--transition);
+}
+.mobile-menu a:hover { background: rgba(255,255,255,0.07); color: var(--blue-light); }
+.mobile-menu .mob-cta { background: var(--blue); color: var(--white); text-align: center; margin-top: 8px; }
+
+/* PAGES */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== HERO ===== */
+#hero {
+  min-height: 100vh; position: relative;
+  display: flex; align-items: center; overflow: hidden;
+  background: var(--navy);
+}
+.hero-bg-img {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover; background-position: center;
+  filter: brightness(0.28);
+}
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(105deg, rgba(13,27,42,0.92) 0%, rgba(13,27,42,0.65) 60%, rgba(13,27,42,0.3) 100%);
+}
+.hero-content { position: relative; z-index: 2; padding: 130px 0 80px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(26,127,212,0.18); border: 1px solid rgba(26,127,212,0.35);
+  color: var(--blue-light); padding: 8px 16px; border-radius: 100px;
+  font-family: var(--font-d); font-size: 13px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px;
+}
+.hero-badge::before {
+  content: ''; width: 8px; height: 8px; background: var(--blue-light);
+  border-radius: 50%; animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+
+.hero-title {
+  font-family: var(--font-d); font-size: clamp(46px,8vw,92px);
+  font-weight: 800; line-height: 1.0; color: var(--white); margin-bottom: 24px;
+}
+.hero-title .accent { color: var(--blue-light); }
+
+.hero-sub {
+  font-size: clamp(16px,2vw,20px); color: rgba(255,255,255,0.62);
+  max-width: 520px; line-height: 1.75; margin-bottom: 40px; font-weight: 300;
+}
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 60px; }
+
+.hero-stats {
+  display: flex; gap: 40px; flex-wrap: wrap;
+  padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.1);
+}
+.hero-stat-num { font-family: var(--font-d); font-size: 36px; font-weight: 800; color: var(--blue-light); line-height: 1; }
+.hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+/* TRUST BAR */
+.trust-bar { background: var(--navy-mid); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 20px 0; }
+.trust-items { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.trust-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.55); font-family: var(--font-d); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+.trust-icon { width: 20px; height: 20px; color: var(--blue-light); flex-shrink: 0; }
+
+/* SERVICES SECTION */
+.services-section { padding: 100px 0; background: var(--white); }
+.section-header { margin-bottom: 56px; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); gap: 24px; }
+
+.service-card {
+  background: var(--white); border: 1.5px solid var(--gray-light);
+  border-radius: var(--radius); padding: 32px; transition: var(--transition);
+  cursor: pointer; position: relative; overflow: hidden;
+}
+.service-card::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+}
+.service-card:hover { border-color: var(--blue); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+.service-card:hover::before { transform: scaleX(1); }
+
+.service-icon {
+  width: 52px; height: 52px; background: rgba(26,127,212,0.1); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--blue);
+}
+.service-icon svg { width: 26px; height: 26px; }
+.service-card h3 { font-family: var(--font-d); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.service-card p { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+.service-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-family: var(--font-d); font-size: 13px; font-weight: 700; color: var(--blue); letter-spacing: 0.5px; text-transform: uppercase; transition: gap 0.2s; }
+.service-card:hover .service-link { gap: 10px; }
+
+/* USP SECTION */
+.usp-section { padding: 100px 0; background: var(--navy); position: relative; overflow: hidden; }
+.usp-section::before {
+  content: ''; position: absolute; right: -80px; top: -80px;
+  width: 400px; height: 400px; background: radial-gradient(circle, rgba(26,127,212,0.07) 0%, transparent 70%);
+}
+.usp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.usp-list { display: flex; flex-direction: column; gap: 24px; margin-top: 36px; }
+.usp-item { display: flex; gap: 16px; align-items: flex-start; }
+.usp-check {
+  width: 28px; height: 28px; background: rgba(26,127,212,0.18); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; color: var(--blue-light);
+}
+.usp-check svg { width: 14px; height: 14px; }
+.usp-item h4 { font-family: var(--font-d); font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.usp-item p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+.usp-visual {
+  border-radius: var(--radius); overflow: hidden; position: relative;
+  height: 480px; box-shadow: var(--shadow-lg);
+}
+.usp-visual img { width: 100%; height: 100%; object-fit: cover; }
+.usp-visual-badge {
+  position: absolute; bottom: 24px; left: 24px; right: 24px;
+  background: rgba(13,27,42,0.9); backdrop-filter: blur(8px);
+  border-radius: var(--radius-sm); padding: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.usp-visual-badge h4 { font-family: var(--font-d); font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.usp-visual-badge p { font-size: 13px; color: rgba(255,255,255,0.55); }
+
+/* WERKWIJZE */
+.werkwijze-section { padding: 100px 0; background: var(--off-white); }
+.werkwijze-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 24px; margin-top: 56px; }
+.stap-card { background: var(--white); border-radius: var(--radius); padding: 32px; border: 1.5px solid var(--gray-light); transition: var(--transition); position: relative; }
+.stap-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); border-color: var(--blue); }
+.stap-num { font-family: var(--font-d); font-size: 56px; font-weight: 800; color: rgba(26,127,212,0.12); line-height: 1; margin-bottom: 12px; }
+.stap-card h3 { font-family: var(--font-d); font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.stap-card p { font-size: 14px; color: var(--text-light); line-height: 1.65; }
+
+/* PROJECTS */
+.projects-section { padding: 100px 0; background: var(--white); }
+.projects-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 20px; }
+.projects-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 20px; }
+.project-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); }
+.project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-5px); }
+.project-card.featured { grid-column: span 7; }
+.project-card.normal  { grid-column: span 5; }
+.project-card.half    { grid-column: span 6; }
+.project-img { overflow: hidden; position: relative; background: var(--navy-light); }
+.project-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.project-card:hover .project-img img { transform: scale(1.05); }
+.project-card.featured .project-img { height: 320px; }
+.project-card.normal .project-img,
+.project-card.half .project-img { height: 240px; }
+.project-tag { position: absolute; top: 16px; left: 16px; background: var(--blue); color: var(--white); padding: 4px 12px; border-radius: 100px; font-family: var(--font-d); font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+.project-body { padding: 28px; }
+.project-body h3 { font-family: var(--font-d); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.project-body p { font-size: 14px; color: var(--text-light); line-height: 1.6; margin-bottom: 14px; }
+.project-result { display: flex; align-items: center; gap: 8px; font-family: var(--font-d); font-size: 14px; font-weight: 700; color: var(--success); }
+
+/* STORING CTA */
+.storing-section { padding: 64px 0; background: var(--blue); }
+.storing-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.storing-text h2 { font-family: var(--font-d); font-size: clamp(26px,4vw,40px); font-weight: 800; color: var(--white); line-height: 1.1; margin-bottom: 8px; }
+.storing-text p { font-size: 16px; color: rgba(255,255,255,0.75); }
+.storing-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-storing { background: var(--white); color: var(--navy); padding: 14px 24px; border-radius: var(--radius-sm); font-family: var(--font-d); font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition); }
+.btn-storing:hover { background: var(--off-white); transform: translateY(-2px); }
+
+/* TEAM SECTION */
+.team-section { padding: 100px 0; background: var(--off-white); }
+.team-visual { border-radius: var(--radius); overflow: hidden; height: 460px; box-shadow: var(--shadow-lg); margin-top: 48px; }
+.team-visual img { width: 100%; height: 100%; object-fit: cover; }
+.vans-section { padding: 64px 0; background: var(--navy); }
+.vans-img { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); }
+.vans-img img { width: 100%; height: 360px; object-fit: cover; }
+
+/* REVIEWS */
+.reviews-section { padding: 100px 0; background: var(--white); }
+.reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); gap: 24px; margin-top: 48px; }
+.review-card { background: var(--off-white); border-radius: var(--radius); padding: 32px; border: 1.5px solid var(--gray-light); transition: var(--transition); }
+.review-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.review-stars { display: flex; gap: 4px; margin-bottom: 16px; }
+.review-stars span { color: #f59e0b; font-size: 18px; }
+.review-text { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+.reviewer { display: flex; align-items: center; gap: 12px; }
+.reviewer-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--white); }
+.reviewer-name { font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--navy); }
+.reviewer-type { font-size: 13px; color: var(--text-light); }
+
+/* FAQ */
+.faq-section { padding: 100px 0; background: var(--off-white); }
+.faq-list { max-width: 760px; margin: 48px auto 0; }
+.faq-item { background: var(--white); border-radius: var(--radius-sm); margin-bottom: 8px; border: 1.5px solid var(--gray-light); overflow: hidden; transition: border-color 0.2s; }
+.faq-item.open { border-color: var(--blue); }
+.faq-question { width: 100%; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; background: none; border: none; cursor: pointer; text-align: left; gap: 16px; }
+.faq-q-text { font-family: var(--font-d); font-size: 18px; font-weight: 700; color: var(--navy); }
+.faq-icon { width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: var(--gray-light); display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+.faq-item.open .faq-icon { background: var(--blue); transform: rotate(45deg); }
+.faq-icon svg { color: var(--navy); }
+.faq-item.open .faq-icon svg { color: var(--white); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.faq-item.open .faq-answer { max-height: 300px; }
+.faq-answer-inner { padding: 0 24px 20px; font-size: 15px; color: var(--text-light); line-height: 1.7; }
+
+/* PAGE HERO */
+.page-hero { background: var(--navy); padding: 140px 0 80px; position: relative; overflow: hidden; }
+.page-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.2); }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(13,27,42,0.95) 0%, rgba(13,27,42,0.6) 100%); }
+.page-hero .container { position: relative; z-index: 1; }
+.page-hero h1 { font-family: var(--font-d); font-size: clamp(40px,6vw,72px); font-weight: 800; color: var(--white); line-height: 1.0; margin-bottom: 16px; }
+.page-hero p { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 540px; font-weight: 300; line-height: 1.6; }
+
+/* SERVICES PAGE */
+.services-full { padding: 80px 0; }
+.service-block { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; padding: 64px 0; border-bottom: 1px solid var(--gray-light); }
+.service-block:last-child { border-bottom: none; }
+.service-block.reverse { direction: rtl; }
+.service-block.reverse > * { direction: ltr; }
+.service-block-icon { width: 60px; height: 60px; background: rgba(26,127,212,0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--blue); }
+.service-block-icon svg { width: 30px; height: 30px; }
+.service-block h2 { font-family: var(--font-d); font-size: clamp(26px,3vw,36px); font-weight: 800; color: var(--navy); margin-bottom: 16px; }
+.service-block p { font-size: 16px; color: var(--text-light); line-height: 1.75; margin-bottom: 20px; }
+.service-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.service-feat { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text); }
+.service-feat::before { content: ''; width: 8px; height: 8px; background: var(--blue); border-radius: 50%; flex-shrink: 0; }
+.service-photo { border-radius: var(--radius); overflow: hidden; height: 340px; box-shadow: var(--shadow-lg); }
+.service-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* PROJECTS PAGE */
+.projects-full { padding: 80px 0; }
+.projects-full-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px,1fr)); gap: 32px; }
+.project-full-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); border: 1.5px solid var(--gray-light); }
+.project-full-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-6px); }
+.project-full-img { height: 260px; overflow: hidden; position: relative; background: var(--navy-light); }
+.project-full-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.project-full-card:hover .project-full-img img { transform: scale(1.05); }
+.project-full-body { padding: 32px; }
+.project-full-body h3 { font-family: var(--font-d); font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+.case-row { padding: 11px 0; border-bottom: 1px solid var(--gray-light); display: grid; grid-template-columns: 95px 1fr; gap: 12px; }
+.case-row:last-of-type { border-bottom: none; }
+.case-label { font-family: var(--font-d); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); }
+.case-value { font-size: 14px; color: var(--text-light); line-height: 1.55; }
+.case-result .case-value { color: var(--success); font-weight: 600; }
+
+/* ABOUT */
+.about-intro { padding: 80px 0; background: var(--white); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-text h2 { font-family: var(--font-d); font-size: clamp(30px,4vw,48px); font-weight: 800; color: var(--navy); margin-bottom: 20px; line-height: 1.1; }
+.about-text p { font-size: 16px; color: var(--text-light); line-height: 1.8; margin-bottom: 16px; }
+.about-photo { border-radius: var(--radius); overflow: hidden; height: 420px; box-shadow: var(--shadow-lg); }
+.about-photo img { width: 100%; height: 100%; object-fit: cover; }
+.about-values { padding: 80px 0; background: var(--off-white); }
+.values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 24px; margin-top: 48px; }
+.value-card { background: var(--white); border-radius: var(--radius); padding: 32px; border: 1.5px solid var(--gray-light); transition: var(--transition); }
+.value-card:hover { border-color: var(--blue); box-shadow: var(--shadow); transform: translateY(-4px); }
+.value-icon { font-size: 36px; margin-bottom: 16px; }
+.value-card h3 { font-family: var(--font-d); font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.value-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+/* CONTACT */
+.contact-section { padding: 80px 0; background: var(--white); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+.contact-info h2 { font-family: var(--font-d); font-size: 36px; font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+.contact-info p { font-size: 15px; color: var(--text-light); line-height: 1.7; margin-bottom: 32px; }
+.contact-details { display: flex; flex-direction: column; gap: 20px; }
+.contact-detail { display: flex; gap: 16px; align-items: flex-start; }
+.cd-icon { width: 44px; height: 44px; background: rgba(26,127,212,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--blue); flex-shrink: 0; }
+.cd-icon svg { width: 20px; height: 20px; }
+.cd-label { font-family: var(--font-d); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+.cd-value { font-size: 15px; color: var(--text); font-weight: 500; }
+.cd-value a { color: var(--navy); transition: color 0.2s; }
+.cd-value a:hover { color: var(--blue); }
+.contact-form-card { background: var(--white); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow-lg); border: 1.5px solid var(--gray-light); }
+.form-title { font-family: var(--font-d); font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 28px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-family: var(--font-d); font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gray-dark); margin-bottom: 8px; }
+.form-input, .form-select, .form-textarea { width: 100%; padding: 13px 16px; border: 1.5px solid var(--gray-light); border-radius: var(--radius-sm); font-family: var(--font-b); font-size: 15px; color: var(--text); background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,127,212,0.12); }
+.form-input.error, .form-textarea.error { border-color: var(--error); }
+.form-textarea { resize: vertical; min-height: 120px; }
+.form-error { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
+.form-error.visible { display: block; }
+.form-success { display: none; background: rgba(34,197,94,0.1); border: 1.5px solid rgba(34,197,94,0.3); border-radius: var(--radius-sm); padding: 20px; text-align: center; color: #16a34a; font-family: var(--font-d); font-size: 16px; font-weight: 600; }
+.form-success.visible { display: block; }
+.map-wrap { padding: 0 0 80px; }
+.map-container { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); height: 380px; }
+.map-container iframe { width: 100%; height: 100%; border: none; }
+
+/* WIZARD */
+.wizard-section { padding: 80px 0; background: var(--off-white); min-height: 80vh; }
+.wizard-card { max-width: 680px; margin: 0 auto; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; border: 1.5px solid var(--gray-light); }
+.wizard-header { background: var(--navy); padding: 32px 40px; }
+.wizard-header h2 { font-family: var(--font-d); font-size: 28px; font-weight: 800; color: var(--white); margin-bottom: 20px; }
+.progress-bar { display: flex; align-items: center; }
+.progress-step { display: flex; align-items: center; flex: 1; }
+.step-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-d); font-size: 14px; font-weight: 700; background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.45); flex-shrink: 0; transition: var(--transition); }
+.progress-step.active .step-circle { background: var(--blue); color: var(--white); }
+.progress-step.done .step-circle { background: var(--success); color: var(--white); }
+.step-label { font-family: var(--font-d); font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.35); margin-left: 8px; white-space: nowrap; transition: color 0.2s; }
+.progress-step.active .step-label { color: rgba(255,255,255,0.85); }
+.progress-step.done .step-label { color: rgba(255,255,255,0.55); }
+.step-line { flex: 1; height: 2px; background: rgba(255,255,255,0.1); margin: 0 8px; }
+.wizard-body { padding: 40px; }
+.wizard-step { display: none; }
+.wizard-step.active { display: block; }
+.wizard-step-title { font-family: var(--font-d); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.wizard-step-sub { font-size: 14px; color: var(--text-light); margin-bottom: 28px; }
+.service-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+.service-option { border: 2px solid var(--gray-light); border-radius: var(--radius-sm); padding: 16px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 12px; background: var(--white); }
+.service-option:hover { border-color: var(--blue); background: rgba(26,127,212,0.04); }
+.service-option.selected { border-color: var(--blue); background: rgba(26,127,212,0.07); }
+.service-option input { display: none; }
+.opt-icon { width: 36px; height: 36px; background: var(--off-white); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; transition: background 0.2s; }
+.service-option.selected .opt-icon { background: rgba(26,127,212,0.12); }
+.opt-label { font-family: var(--font-d); font-size: 15px; font-weight: 700; color: var(--navy); }
+.wizard-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--gray-light); }
+.btn-wiz-prev { background: none; border: 1.5px solid var(--gray-light); color: var(--text-light); padding: 12px 24px; border-radius: var(--radius-sm); font-family: var(--font-d); font-size: 15px; font-weight: 700; cursor: pointer; transition: var(--transition); }
+.btn-wiz-prev:hover { border-color: var(--navy); color: var(--navy); }
+.wizard-success { display: none; text-align: center; padding: 20px 0; }
+.wizard-success.visible { display: block; }
+.success-icon { width: 72px; height: 72px; background: rgba(34,197,94,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; }
+.wizard-success h3 { font-family: var(--font-d); font-size: 28px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+.wizard-success p { font-size: 15px; color: var(--text-light); line-height: 1.7; max-width: 400px; margin: 0 auto 16px; }
+
+/* FOOTER */
+footer { background: var(--navy); padding: 64px 0 0; color: rgba(255,255,255,0.6); }
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.footer-logo img { height: 38px; width: auto; margin-bottom: 16px; }
+.footer-brand p { font-size: 14px; line-height: 1.7; margin-bottom: 20px; max-width: 260px; }
+.footer-social { display: flex; gap: 10px; }
+.social-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.55); transition: var(--transition); font-size: 14px; font-weight: 700; }
+.social-btn:hover { background: var(--blue); color: var(--white); }
+.footer-col h4 { font-family: var(--font-d); font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 20px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col li { font-size: 14px; }
+.footer-col a { color: rgba(255,255,255,0.5); transition: color 0.2s; }
+.footer-col a:hover { color: var(--blue-light); }
+.footer-bottom { padding: 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,0.3); }
+
+/* TOASTS */
+#toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+.toast { background: var(--navy); color: var(--white); padding: 14px 20px; border-radius: var(--radius-sm); font-family: var(--font-d); font-size: 15px; font-weight: 600; max-width: 320px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); border-left: 4px solid var(--blue); animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards; }
+.toast.error { border-left-color: var(--error); }
+.toast.success { border-left-color: var(--success); }
+@keyframes slideIn { from{transform:translateX(100%);opacity:0} to{transform:none;opacity:1} }
+@keyframes fadeOut { to{opacity:0;transform:translateX(30px)} }
+
+/* COOKIE */
+#cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: var(--navy); border-top: 1px solid rgba(255,255,255,0.1); padding: 16px 24px; z-index: 9998; display: none; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+#cookie-banner p { font-size: 14px; color: rgba(255,255,255,0.65); max-width: 600px; line-height: 1.5; }
+.cookie-btns { display: flex; gap: 10px; }
+.btn-cookie-accept { background: var(--blue); color: var(--white); padding: 9px 20px; border-radius: 6px; font-family: var(--font-d); font-size: 14px; font-weight: 700; border: none; cursor: pointer; transition: var(--transition); }
+.btn-cookie-accept:hover { background: var(--blue-dim); }
+.btn-cookie-decline { background: transparent; color: rgba(255,255,255,0.5); padding: 9px 16px; border-radius: 6px; font-family: var(--font-d); font-size: 14px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; transition: var(--transition); }
+.btn-cookie-decline:hover { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.3); }
+
+/* RESPONSIVE */
+@media(max-width:1024px) {
+  .usp-grid { grid-template-columns: 1fr; gap: 40px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.featured,.project-card.normal,.project-card.half { grid-column: span 1; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media(max-width:768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .service-block { grid-template-columns: 1fr; gap: 32px; }
+  .service-block.reverse { direction: ltr; }
+  .service-options { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 24px; }
+  .storing-inner { flex-direction: column; align-items: flex-start; }
+  .wizard-body { padding: 24px; }
+  .wizard-header { padding: 24px; }
+  .step-label { display: none; }
+  .werkwijze-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:480px) {
+  .container { padding: 0 16px; }
+  .contact-form-card { padding: 24px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .werkwijze-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <a href="#" onclick="showPage('home')" style="display:flex;align-items:center;">
+        <img src="images/img01.png" alt="H&S Elektrotechniek logo" style="height:44px;background:white;border-radius:6px;padding:4px 8px;">
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('diensten')">Diensten</a>
+        <a href="#" onclick="showPage('projecten')">Projecten</a>
+        <a href="#" onclick="showPage('over-ons')">Over ons</a>
+        <a href="#" onclick="showPage('contact')">Contact</a>
+        <a href="#" onclick="showPage('offerte')" class="nav-cta">Offerte aanvragen</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#" onclick="showPage('home');closeMobileMenu()">Home</a>
+  <a href="#" onclick="showPage('diensten');closeMobileMenu()">Diensten</a>
+  <a href="#" onclick="showPage('projecten');closeMobileMenu()">Projecten</a>
+  <a href="#" onclick="showPage('over-ons');closeMobileMenu()">Over ons</a>
+  <a href="#" onclick="showPage('contact');closeMobileMenu()">Contact</a>
+  <a href="#" onclick="showPage('offerte');closeMobileMenu()" class="mob-cta">Offerte aanvragen →</a>
+</div>
+
+<div id="toast-container"></div>
+
+<div id="cookie-banner" role="dialog">
+  <p>Wij gebruiken cookies om uw ervaring te verbeteren. Door verder te gaan stemt u in met ons cookiebeleid.</p>
+  <div class="cookie-btns">
+    <button class="btn-cookie-accept" onclick="acceptCookies()">Akkoord</button>
+    <button class="btn-cookie-decline" onclick="declineCookies()">Weigeren</button>
+  </div>
+</div>
+
+<!-- ===================== PAGE: HOME ===================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-img" style="background-image:url('images/img02.jpg')"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <div class="hero-badge">Uw elektricien in Dongen &amp; omgeving</div>
+      <h1 class="hero-title">Veilige &amp; vakkundige<br><span class="accent">elektrotechniek,</span><br>van A tot Z.</h1>
+      <p class="hero-sub">Van storingen tot complete installaties. H&amp;S Elektrotechniek staat voor betrouwbaar vakmanschap, persoonlijke service en heldere communicatie.</p>
+      <div class="hero-actions">
+        <a href="#" onclick="showPage('offerte')" class="btn btn-primary">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Gratis offerte aanvragen
+        </a>
+        <a href="tel:0636277154" class="btn btn-outline">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          Bel direct: 06-36277154
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">100%</div><div class="hero-stat-label">Klanttevredenheid centraal</div></div>
+        <div><div class="hero-stat-num">Snel</div><div class="hero-stat-label">Respons bij storingen</div></div>
+        <div><div class="hero-stat-num">Veilig</div><div class="hero-stat-label">Gecertificeerd vakmanschap</div></div>
+        <div><div class="hero-stat-num">Eerlijk</div><div class="hero-stat-label">Transparante prijzen</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="container">
+      <div class="trust-items">
+        <div class="trust-item">
+          <svg class="trust-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          Veilig &amp; gecertificeerd
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Snel ter plaatse
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Particulier &amp; zakelijk
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          Transparante offertes
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          Duurzame oplossingen
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES PREVIEW -->
+  <section class="services-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Onze diensten</span>
+        <h2 class="section-title">Alles op elektrotechnisch gebied</h2>
+        <p class="section-intro">Of het nu gaat om een storing, verbouwing of verduurzaming — vakkundige elektrotechnische oplossingen voor elke situatie.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal" onclick="showPage('diensten')">
+          <div class="service-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h3>Storingen &amp; Reparaties</h3>
+          <p>Geen stroom of elektrisch probleem? Wij reageren snel en lossen het op — vakkundig en veilig.</p>
+          <span class="service-link">Meer info →</span>
+        </div>
+        <div class="service-card reveal" onclick="showPage('diensten')">
+          <div class="service-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+          <h3>Verlichting &amp; LED</h3>
+          <p>Moderne, energiezuinige verlichtingsoplossingen voor woning, bedrijf en buitenruimte.</p>
+          <span class="service-link">Meer info →</span>
+        </div>
+        <div class="service-card reveal" onclick="showPage('diensten')">
+          <div class="service-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <h3>Zonnepanelen</h3>
+          <p>Van advies tot installatie en monitoring — de overstap naar duurzame energie, ontzorgd.</p>
+          <span class="service-link">Meer info →</span>
+        </div>
+        <div class="service-card reveal" onclick="showPage('diensten')">
+          <div class="service-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+          <h3>Keuringen &amp; Inspecties</h3>
+          <p>Grondige veiligheidskeuringen conform de geldende regelgeving en normen.</p>
+          <span class="service-link">Meer info →</span>
+        </div>
+        <div class="service-card reveal" onclick="showPage('diensten')">
+          <div class="service-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
+          <h3>Nieuwbouw &amp; Renovatie</h3>
+          <p>Complete elektrotechnische installaties voor nieuwbouw en renovatieprojecten.</p>
+          <span class="service-link">Meer info →</span>
+        </div>
+        <div class="service-card reveal" style="background:var(--navy);border-color:var(--navy);">
+          <div class="service-icon" style="background:rgba(26,127,212,0.2);">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--blue-light)"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 style="color:var(--white)">Niet gevonden?</h3>
+          <p style="color:rgba(255,255,255,0.55)">Geen opdracht te groot of te klein. Neem contact op voor een vrijblijvend gesprek.</p>
+          <a href="tel:0636277154" class="service-link" style="color:var(--blue-light)">Bel ons →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USP SECTION -->
+  <section class="usp-section">
+    <div class="container">
+      <div class="usp-grid">
+        <div>
+          <span class="section-label">Waarom H&amp;S?</span>
+          <h2 class="section-title light">Vakmanschap dat u kunt vertrouwen</h2>
+          <div class="usp-list">
+            <div class="usp-item reveal">
+              <div class="usp-check"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><h4>Veiligheid staat voorop</h4><p>Elk project wordt uitgevoerd conform de NEN-normen. Geen compromissen op veiligheid.</p></div>
+            </div>
+            <div class="usp-item reveal">
+              <div class="usp-check"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><h4>Persoonlijke service</h4><p>Direct contact met de vakman. Geen tussenpersonen, eerlijk advies en heldere communicatie.</p></div>
+            </div>
+            <div class="usp-item reveal">
+              <div class="usp-check"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><h4>Transparante offertes</h4><p>Duidelijke prijsopgave vooraf. Geen verrassingen achteraf.</p></div>
+            </div>
+            <div class="usp-item reveal">
+              <div class="usp-check"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><h4>Toekomstgericht</h4><p>Van zonnepanelen tot slimme systemen — wij denken met u mee over duurzame keuzes.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="usp-visual reveal">
+          <img src="images/img03.jpg" alt="H&S team aan het werk" loading="lazy">
+          <div class="usp-visual-badge">
+            <h4>Vakkundig team</h4>
+            <p>Ervaren monteurs die uw project met zorg en precisie uitvoeren.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WERKWIJZE -->
+  <section class="werkwijze-section">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;">
+        <span class="section-label">Zo werken wij</span>
+        <h2 class="section-title">Helder proces, geen verrassingen</h2>
+      </div>
+      <div class="werkwijze-grid">
+        <div class="stap-card reveal">
+          <div class="stap-num">01</div>
+          <h3>Contact &amp; intake</h3>
+          <p>U neemt contact op via telefoon, e-mail of het formulier. Wij luisteren naar uw situatie en plannen een afspraak in.</p>
+        </div>
+        <div class="stap-card reveal">
+          <div class="stap-num">02</div>
+          <h3>Offerte op maat</h3>
+          <p>Wij brengen de situatie in kaart en sturen u een heldere, vrijblijvende offerte met duidelijke prijzen.</p>
+        </div>
+        <div class="stap-card reveal">
+          <div class="stap-num">03</div>
+          <h3>Vakkundige uitvoering</h3>
+          <p>Wij voeren het werk netjes, veilig en op tijd uit — met minimale overlast voor u.</p>
+        </div>
+        <div class="stap-card reveal">
+          <div class="stap-num">04</div>
+          <h3>Oplevering &amp; nazorg</h3>
+          <p>Nette oplevering en altijd bereikbaar voor vragen of vervolgwerkzaamheden nadien.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS PREVIEW -->
+  <section class="projects-section">
+    <div class="container">
+      <div class="projects-header">
+        <div class="reveal">
+          <span class="section-label">Recente projecten</span>
+          <h2 class="section-title">Resultaten die spreken</h2>
+        </div>
+        <a href="#" onclick="showPage('projecten')" class="btn btn-dark reveal">Alle projecten →</a>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card featured reveal">
+          <div class="project-img">
+            <img src="images/img04.jpg" alt="Nieuwbouw installatie" loading="lazy">
+            <div class="project-tag">Nieuwbouw</div>
+          </div>
+          <div class="project-body">
+            <h3>Elektrotechnische renovatie Curaçao</h3>
+            <p>Complete elektrische, brand-, beveiligings- en data-installatie voor een grootschalig renovatieproject, inclusief brandmeldsysteem gekoppeld aan automatische deuren.</p>
+            <div class="project-result">Veilig, toekomstbestendig &amp; op tijd opgeleverd</div>
+          </div>
+        </div>
+        <div class="project-card normal reveal">
+          <div class="project-img">
+            <img src="images/img05.jpg" alt="Zonnepanelen installatie" loading="lazy">
+            <div class="project-tag">Zonnepanelen</div>
+          </div>
+          <div class="project-body">
+            <h3>20 Zonnepanelen + monitoring</h3>
+            <p>Installatie van 20 zonnepanelen met omvormer en slimme monitoringsapp voor optimaal inzicht en rendement.</p>
+            <div class="project-result">~70% eigen energieproductie behaald</div>
+          </div>
+        </div>
+        <div class="project-card half reveal">
+          <div class="project-img">
+            <img src="images/img06.jpg" alt="Designlamp vergaderzaal" loading="lazy">
+            <div class="project-tag">Verlichting</div>
+          </div>
+          <div class="project-body">
+            <h3>Sfeerverlichting restaurant</h3>
+            <p>Dimbare tafelverlichting, keuken- en barverlichting plus extra stopcontacten.</p>
+            <div class="project-result">Perfecte sfeer én optimale functionaliteit</div>
+          </div>
+        </div>
+        <div class="project-card half reveal">
+          <div class="project-img">
+            <img src="images/img07.jpg" alt="Statement vide-lamp" loading="lazy">
+            <div class="project-tag">Statement verlichting</div>
+          </div>
+          <div class="project-body">
+            <h3>Volledige verlichtingsrenovatie</h3>
+            <p>LED-upgrade voor alle ruimtes, inclusief slimme verlichting via app-bediening.</p>
+            <div class="project-result">Tot 50% besparing op energiekosten</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORING CTA -->
+  <section class="storing-section">
+    <div class="container">
+      <div class="storing-inner">
+        <div class="storing-text">
+          <h2>Elektrische storing?<br>Wij reageren snel.</h2>
+          <p>Bel ons direct — wij helpen u zo snel mogelijk, ook buiten kantooruren.</p>
+        </div>
+        <div class="storing-actions">
+          <a href="tel:0636277154" class="btn-storing">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            06-362 771 54
+          </a>
+          <a href="tel:0615699409" class="btn-storing">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            06-156 994 09
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VANS SECTION -->
+  <section class="vans-section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+        <div class="reveal">
+          <span class="section-label">Altijd herkenbaar</span>
+          <h2 class="section-title light" style="margin-bottom:16px;">Onze bedrijfswagens staan voor u klaar</h2>
+          <p style="color:rgba(255,255,255,0.55);font-size:16px;line-height:1.7;">Met onze volledig uitgeruste en herkenbare bedrijfswagens zijn wij snel bij u ter plaatse. Vakkundig gereedschap, netjes voor uw deur.</p>
+        </div>
+        <div class="vans-img reveal">
+          <img src="images/img08.jpg" alt="H&S Elektrotechniek bedrijfswagens" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Ervaringen</span>
+        <h2 class="section-title">Wat onze klanten zeggen</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="review-text">"H&S heeft onze complete elektrische installatie vernieuwd na de verbouwing. Netjes werk, duidelijke communicatie en binnen de afgesproken tijd klaar."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="background:#2563eb;">M</div>
+            <div><div class="reviewer-name">Martin V.</div><div class="reviewer-type">Particuliere klant, Dongen</div></div>
+          </div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="review-text">"Snel gereageerd op onze storing en het probleem vakkundig opgelost. Eerlijk advies en heldere factuur. Onze vaste elektricien voortaan."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="background:#16a34a;">A</div>
+            <div><div class="reviewer-name">Anita B.</div><div class="reviewer-type">Zakelijke klant</div></div>
+          </div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <p class="review-text">"De zonnepanelen zijn keurig geïnstalleerd en de uitleg over de monitoring-app was helder. Duidelijk een vakman die zijn werk serieus neemt."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="background:#b45309;">R</div>
+            <div><div class="reviewer-name">Rob S.</div><div class="reviewer-type">Particuliere klant</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;">
+        <span class="section-label">Veelgestelde vragen</span>
+        <h2 class="section-title">Antwoorden op uw vragen</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span class="faq-q-text">Wat kost een vrijblijvende offerte?</span><div class="faq-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div></button><div class="faq-answer"><div class="faq-answer-inner">Een vrijblijvende offerte is kosteloos. Wij komen de situatie bekijken en sturen u een heldere prijsopgave zonder verborgen kosten.</div></div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span class="faq-q-text">Hoe snel reageren jullie bij een storing?</span><div class="faq-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div></button><div class="faq-answer"><div class="faq-answer-inner">Wij reageren zo snel mogelijk op storingen. Bel ons direct voor de snelste reactie — ook buiten kantooruren.</div></div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span class="faq-q-text">Werken jullie ook voor bedrijven?</span><div class="faq-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div></button><div class="faq-answer"><div class="faq-answer-inner">Zeker. Wij werken voor zowel particulieren als bedrijven. KvK 90072332. Voor zakelijke klanten bieden wij maatwerkoplossingen voor installaties, keuringen en onderhoud.</div></div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span class="faq-q-text">Installeren jullie ook zonnepanelen?</span><div class="faq-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div></button><div class="faq-answer"><div class="faq-answer-inner">Ja. Van adviesgesprek tot installatie van zonnepanelen inclusief omvormer en monitoringsapp — wij begeleiden het hele traject.</div></div></div>
+        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span class="faq-q-text">In welke regio zijn jullie actief?</span><div class="faq-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div></button><div class="faq-answer"><div class="faq-answer-inner">Wij zijn gevestigd in Dongen en actief in Noord-Brabant en omgeving. Neem contact op voor de mogelijkheden in uw regio.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section style="padding:80px 0;background:var(--navy);text-align:center;">
+    <div class="container">
+      <span class="section-label">Klaar om te starten?</span>
+      <h2 class="section-title light" style="margin:12px auto 20px;max-width:600px;">Vraag vandaag nog uw vrijblijvende offerte aan</h2>
+      <p style="color:rgba(255,255,255,0.5);font-size:16px;margin-bottom:36px;">Wij nemen binnen één werkdag contact op.</p>
+      <a href="#" onclick="showPage('offerte')" class="btn btn-primary" style="font-size:18px;padding:16px 40px;">Offerte aanvragen →</a>
+    </div>
+  </section>
+
+</div><!-- /home -->
+
+
+<!-- ===================== PAGE: DIENSTEN ===================== -->
+<div class="page" id="page-diensten">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('images/img09.jpg')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="section-label">Wat wij doen</span>
+      <h1>Onze diensten</h1>
+      <p>Vakkundige elektrotechnische oplossingen voor particulieren en bedrijven — van storingen tot duurzame installaties.</p>
+    </div>
+  </div>
+  <div class="services-full">
+    <div class="container">
+      <div class="service-block">
+        <div>
+          <div class="service-block-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h2>Storingen &amp; Reparaties</h2>
+          <p>Een elektrische storing kan op elk moment optreden. Wij reageren snel, pakken het probleem bij de wortel aan en zorgen dat u zo min mogelijk hinder ondervindt.</p>
+          <p>Wij zijn bereikbaar voor spoedgevallen — ook buiten reguliere kantooruren. Bel ons direct voor de snelste reactie.</p>
+          <div class="service-features">
+            <div class="service-feat">Groepskasten en zekeringen</div>
+            <div class="service-feat">Defecte installaties en bedrading</div>
+            <div class="service-feat">Kortsluiting diagnose en herstel</div>
+            <div class="service-feat">Aardlekschakelaars</div>
+            <div class="service-feat">Spoedreacties bij storingen</div>
+          </div>
+          <a href="tel:0636277154" class="btn btn-primary">📞 Bel direct bij storing</a>
+        </div>
+        <div class="service-photo">
+          <img src="images/img02.jpg" alt="Monteur controleert groepenkast" loading="lazy">
+        </div>
+      </div>
+      <div class="service-block reverse">
+        <div>
+          <div class="service-block-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+          <h2>Verlichting &amp; LED-installaties</h2>
+          <p>Goede verlichting is meer dan licht aanzetten. Van sfeerverlichting voor uw woonkamer tot functionele LED voor uw bedrijfspand — wij adviseren en installeren de beste oplossing.</p>
+          <div class="service-features">
+            <div class="service-feat">LED-verlichting voor alle ruimtes</div>
+            <div class="service-feat">Dimbare en sfeerverlichting</div>
+            <div class="service-feat">Slimme verlichting (app-gestuurd)</div>
+            <div class="service-feat">Buitenverlichting en tuinverlichting</div>
+            <div class="service-feat">Spot- en inbouwverlichting</div>
+          </div>
+          <a href="#" onclick="showPage('offerte')" class="btn btn-primary">Offerte aanvragen</a>
+        </div>
+        <div class="service-photo">
+          <img src="images/img10.jpg" alt="LED verlichting installatie" loading="lazy">
+        </div>
+      </div>
+      <div class="service-block">
+        <div>
+          <div class="service-block-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <h2>Zonnepanelen &amp; Duurzame Energie</h2>
+          <p>De stap naar duurzame energie is een verstandige investering voor de lange termijn. Wij begeleiden van het eerste adviesgesprek tot oplevering en nazorg.</p>
+          <div class="service-features">
+            <div class="service-feat">Dakscan en haalbaarheidsanalyse</div>
+            <div class="service-feat">Professionele installatie</div>
+            <div class="service-feat">Omvormer plaatsing en aansluiting</div>
+            <div class="service-feat">Slimme monitoringsapp</div>
+            <div class="service-feat">Aansluiting op bestaande installatie</div>
+          </div>
+          <a href="#" onclick="showPage('offerte')" class="btn btn-primary">Vrijblijvend adviesgesprek</a>
+        </div>
+        <div class="service-photo">
+          <img src="images/img11.jpg" alt="Zonnepanelen installatie op dak" loading="lazy">
+        </div>
+      </div>
+      <div class="service-block reverse">
+        <div>
+          <div class="service-block-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+          <h2>Keuringen &amp; Veiligheidsinspecties</h2>
+          <p>Een veilige elektrische installatie is essentieel. Wij voeren grondige inspecties uit en brengen eventuele tekortkomingen helder in kaart.</p>
+          <div class="service-features">
+            <div class="service-feat">Periodieke veiligheidskeuringen</div>
+            <div class="service-feat">Keuring bij aan- en verkoop woning</div>
+            <div class="service-feat">Inspectie na verbouwing of uitbreiding</div>
+            <div class="service-feat">Bedrijfspand en commercieel vastgoed</div>
+            <div class="service-feat">Helder keuringsrapport</div>
+          </div>
+          <a href="#" onclick="showPage('offerte')" class="btn btn-primary">Keuring aanvragen</a>
+        </div>
+        <div class="service-photo">
+          <img src="images/img12.jpg" alt="Elektrische meting en keuring" loading="lazy">
+        </div>
+      </div>
+      <div class="service-block">
+        <div>
+          <div class="service-block-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
+          <h2>Nieuwbouw &amp; Renovatie</h2>
+          <p>Bij verbouwingen en nieuwbouw is de elektrische installatie het fundament van een veilig gebouw. Wij denken vanaf het begin mee voor een toekomstbestendige installatie.</p>
+          <div class="service-features">
+            <div class="service-feat">Complete installaties voor nieuwbouw</div>
+            <div class="service-feat">Renovatie en uitbreiding bestaande installaties</div>
+            <div class="service-feat">Data- en netwerkaansluitingen</div>
+            <div class="service-feat">Brandmeld- en beveiligingssystemen</div>
+            <div class="service-feat">Nauw overleg met aannemer</div>
+          </div>
+          <a href="#" onclick="showPage('offerte')" class="btn btn-primary">Project bespreken</a>
+        </div>
+        <div class="service-photo">
+          <img src="images/img04.jpg" alt="Nieuwbouw elektrotechnische installatie" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="background:var(--blue);padding:60px 0;text-align:center;">
+    <div class="container">
+      <h2 style="font-family:var(--font-d);font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--white);margin-bottom:12px;">Klaar voor een vrijblijvende offerte?</h2>
+      <p style="color:rgba(255,255,255,0.75);margin-bottom:28px;font-size:16px;">Wij reageren snel en helpen u graag verder.</p>
+      <a href="#" onclick="showPage('offerte')" class="btn btn-white">Offerte aanvragen →</a>
+    </div>
+  </div>
+</div><!-- /diensten -->
+
+
+<!-- ===================== PAGE: PROJECTEN ===================== -->
+<div class="page" id="page-projecten">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('images/img04.jpg')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="section-label">Ons werk</span>
+      <h1>Recente projecten</h1>
+      <p>Een greep uit onze uitgevoerde installaties — van zonnepanelen tot designverlichting en complete renovaties.</p>
+    </div>
+  </div>
+
+  <div class="projects-full">
+    <div class="container">
+      <div class="projects-full-grid">
+
+        <!-- 1. VERGADERZAAL DESIGNLAMP -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img06.jpg" alt="Designlamp vergaderzaal" loading="lazy">
+            <div class="project-tag">Kantoorverlichting</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Moderne designlamp vergaderzaal</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Plaatsing van een premium designlamp in een professionele vergaderzaal voor een luxe en sfeervolle kantooromgeving.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Strak uitgelijnd gemonteerd, volledig afgestemd op de ruimtelijke afmetingen en het interieur.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Functionele verlichting tijdens meetings én een luxe, professionele uitstraling.</span></div>
+          </div>
+        </div>
+
+        <!-- 2. LAADPALEN EASEE -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img13.jpg" alt="Easee laadpalen installatie" loading="lazy">
+            <div class="project-tag">Laadpalen</div>
+          </div>
+          <div class="project-full-body">
+            <h3>2× Easee laadpaal met load balancing</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Installatie van 2 Easee laadpalen op paal, inclusief een Easee Equalizer voor slim en veilig vermogensbeheer.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Laadpalen op maat gemonteerd, Equalizer aangesloten voor automatische lastbalancering — geen overbelasting van de aansluiting.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Optimaal en veilig laden, klaar voor de toekomst.</span></div>
+          </div>
+        </div>
+
+        <!-- 3/4. ZONNEPANELEN DEMONTAGE/HERPLAATSING -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img05.jpg" alt="Zonnepanelen demontage dakrenovatie" loading="lazy">
+            <div class="project-tag">Zonnepanelen</div>
+          </div>
+          <div class="project-full-body">
+            <h3>36 zonnepanelen: demontage &amp; herplaatsing</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Zorgvuldig demonteren van 36 zonnepanelen i.v.m. een complete dakrenovatie, inclusief labeling en veilige opslag.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Panelen losgekoppeld, gelabeld en opgeslagen. Na renovatie teruggeplaatst, uitgelijn en volledig gecontroleerd.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Vernieuwd dak én een zonnestroomsysteem klaar voor jaren rendement.</span></div>
+          </div>
+        </div>
+
+        <!-- 5. SUNSHOWER + BADKAMERRENOVATIE -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img14.jpg" alt="Sunshower badkamer installatie" loading="lazy">
+            <div class="project-tag">Badkamerrenovatie</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Complete elektrische renovatie + Sunshower</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Volledige elektrische renovatie van een luxe badkamer, inclusief plaatsing en aansluiting van een Sunshower infrarood-systeem.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Sunshower aangesloten, spiegelverlichting aangelegd, extra stopcontacten geplaatst en elektrische verwarming aangesloten.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Moderne badkamer met wellness-upgrade — comfort, luxe en techniek perfect gecombineerd.</span></div>
+          </div>
+        </div>
+
+        <!-- 6. HAL / INDUSTRIËLE INSTALLATIE -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img15.jpg" alt="Industriële hal elektrotechnische installatie" loading="lazy">
+            <div class="project-tag">Nieuwbouw</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Complete elektrotechnische installatie nieuwe hal</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Volledige elektrotechnische basis voor een nieuwe industriële hal: verlichting, wandcontactdozen en krachtstroomaansluitingen.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Industriële LED-verlichting gemonteerd, krachtstroom aangelegd en alles conform de geldende normen opgeleverd.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Functionele, energiezuinige installatie klaar voor gebruik.</span></div>
+          </div>
+        </div>
+
+        <!-- 7/8. INDIRECTE LED WONING -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img16.jpg" alt="Indirecte LED strips toilet" loading="lazy">
+            <div class="project-tag">LED-strips</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Indirecte LED-verlichting woning</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Indirecte LED-strips verwerkt in wanden en langs de trap voor een strak minimalistisch overdag en luxe sfeer 's avonds.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Strips naadloos geïntegreerd in de wanden en trapopstand — techniek die onderdeel wordt van het interieur.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Geen standaard lamp, maar verlichting die de ruimte compleet transformeert.</span></div>
+          </div>
+        </div>
+
+        <!-- 9/10. TRIMLESS SPOTS + WTW -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img17.jpg" alt="Trimless inbouwspots plafond" loading="lazy">
+            <div class="project-tag">Inbouwspots</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Volledig trimless plafond — spots &amp; WTW</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Trimless inbouwspots geplaatst en WTW-ventilatie naadloos weggewerkt voor een strak, modern plafondgeheel.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Bekabeling opnieuw ingedeeld, extra stopcontacten en lichtpunten toegevoegd, alles perfect uitgelijnd.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Naadloos plafond — strak, modern en klaar voor afmontage.</span></div>
+          </div>
+        </div>
+
+        <!-- 11. VIDE KROONLUCHTER -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img07.jpg" alt="Statement kroonluchter vide" loading="lazy">
+            <div class="project-tag">Statement verlichting</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Indrukwekkende vide-lamp op maat</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Montage van een spectaculaire vide-lamp die de ruimte direct naar een hoger niveau tilt — speelse lichtpunten met strakke afwerking.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Technisch complex gemonteerd op hoogte, volledig uitgelijn en afgestemd op de architectuur van de vide.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Een echte eyecatcher — warm, luxe en technisch strak uitgevoerd.</span></div>
+          </div>
+        </div>
+
+        <!-- EXISTING: CURAÇAO -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img04.jpg" alt="Renovatieproject Curaçao" loading="lazy">
+            <div class="project-tag">Renovatie &amp; Brand</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Volledige installatie renovatieproject Curaçao</h3>
+            <div class="case-row"><span class="case-label">Uitdaging</span><span class="case-value">Complete elektrische, brand-, beveiligings- en data-installatie voor een grootschalig commercieel renovatieproject.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Nauwe samenwerking met aannemer, kabelinstallatie, brandmeldsysteem gekoppeld aan automatische deuren, data-aansluitingen.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Veilig, toekomstbestendig en op tijd opgeleverd conform alle bouwvoorschriften.</span></div>
+          </div>
+        </div>
+
+        <!-- EXISTING: ZONNEPANELEN 20x -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img11.jpg" alt="Zonnepanelen installatie" loading="lazy">
+            <div class="project-tag">Duurzame energie</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Installatie van 20 zonnepanelen</h3>
+            <div class="case-row"><span class="case-label">Uitdaging</span><span class="case-value">Klant wilde energieverbruik verduurzamen en onafhankelijker worden van het net.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Dakscan, installatie van 20 zonnepanelen, omvormer en koppeling aan slimme monitoringsapp.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Klant produceert circa 70% van eigen energie en heeft volledig inzicht via de app.</span></div>
+          </div>
+        </div>
+
+        <!-- EXISTING: RESTAURANT -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img18.jpg" alt="Restaurant verlichting" loading="lazy">
+            <div class="project-tag">Horeca</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Verlichting en stopcontacten restaurant</h3>
+            <div class="case-row"><span class="case-label">Uitdaging</span><span class="case-value">Sfeervolle maar functionele verlichting én voldoende aansluitingen voor keukenapparatuur.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Verlichtingsplan op maat, dimbare verlichting, functionele keukenverlichting en extra stopcontacten.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Sfeervolle beleving voor gasten én optimale werkruimte voor personeel.</span></div>
+          </div>
+        </div>
+
+
+        <!-- TECHNISCHE RUIMTE NIEUWBOUW -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img19.jpg" alt="Technische ruimte nieuwbouw" loading="lazy">
+            <div class="project-tag">Nieuwbouw</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Complete technische ruimte nieuwbouwproject</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Volledige elektrotechnische afwerking van een technische ruimte: groepenkast, omvormer, voeding en bekabeling voor alle installaties.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Alle elektrotechnische aansluitingen verzorgd en afgestemd op de overige installaties (warmtepomp, watertechniek). Strak en overzichtelijk afgemonteerd.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Een overzichtelijke, toekomstbestendige technische ruimte — tot in de puntjes afgewerkt.</span></div>
+          </div>
+        </div>
+
+        <!-- ZWEMBAD TECHNIEK / AQUADECK -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img20.jpg" alt="Zwembad technische installatie Aquadeck" loading="lazy">
+            <div class="project-tag">Specials</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Elektrotechnische installatie zwembad + Aquadeck</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Volledige elektrotechnische voorbereiding en aansluiting van een zwembadinstallatie inclusief Aquadeck-systeem en bijbehorende pompen en besturing.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Alle kabels, groepen en besturingscomponenten netjes weggewerkt en aangesloten. Strak afgewerkt in de technische ruimte.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Complete, veilige installatie klaar voor gebruik — naadloze samenwerking met overige installateurs.</span></div>
+          </div>
+        </div>
+
+        <!-- LEIDINGEN IN DEKVLOER -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img21.jpg" alt="Elektra en dataleidingen in dekvloer verwerkt" loading="lazy">
+            <div class="project-tag">Nieuwbouw</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Leidingen in verdiepingsvloer — nieuwbouw woning</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Alle elektra-, data- en loze leidingen netjes weggewerkt in de vloerconstructie voordat er gestort werd.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Leidingen uitgelijnd, samengebonden en gecontroleerd zodat alle aansluitingen straks exact op de juiste plekken uitkomen.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Strak voorwerk als fundament voor een perfecte elektrische installatie na oplevering.</span></div>
+          </div>
+        </div>
+
+        <!-- 24 ZONNEPANELEN OOST-WEST -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img22.jpg" alt="24 zonnepanelen Oost-West opstelling" loading="lazy">
+            <div class="project-tag">Zonnepanelen</div>
+          </div>
+          <div class="project-full-body">
+            <h3>24 zonnepanelen in Oost-West opstelling</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Installatie van 24 zonnepanelen in een efficiënte Oost-West opstelling voor een optimale spreiding van de opbrengst over de gehele dag.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Op basis van dakligging en gewenst rendement gekozen voor Oost-West configuratie — stabielere opbrengst en hogere zelfconsumptie.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Duurzaam, efficiënt en toekomstgericht zonnestroomsysteem met optimale dagopbrengst.</span></div>
+          </div>
+        </div>
+
+        <!-- METERKAST VERVANGING -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img23.jpg" alt="Nieuwe Hager groepenkast na vervanging" loading="lazy">
+            <div class="project-tag">Renovatie</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Oude stoppenkast vervangen door moderne groepenkast</h3>
+            <div class="case-row"><span class="case-label">Situatie</span><span class="case-value">Verouderde stoppenkast met aardpotten — niet meer veilig, geen ruimte voor uitbreiding en niet conform huidige normen.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Volledige vervanging door een moderne Hager groepenkast — overzichtelijk ingedeeld, uitvoerig getest en netjes opgeleverd.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Veilige, betrouwbare installatie met ruimte voor uitbreiding — jarenlang zorgeloos vooruit.</span></div>
+          </div>
+        </div>
+
+
+        <!-- DATA-INSTALLATIE: 6 PATCHKASTEN / 600 AANSLUITPUNTEN -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img24.jpg" alt="Patchkasten data-installatie 600 aansluitpunten" loading="lazy">
+            <div class="project-tag">Data &amp; Netwerk</div>
+          </div>
+          <div class="project-full-body">
+            <h3>6 patchkasten — 600 data-aansluitpunten</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Montage van 6 nieuwe patchkasten en het trekken van alle datakabels voor in totaal circa 600 aansluitpunten.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Alle kabels zorgvuldig getrokken, aangesloten en volledig getest en gemeten conform de geldende normen. Veldbekabeling direct operationeel opgeleverd.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Een strak, volledig getest netwerk klaar voor intensief gebruik — direct operationeel.</span></div>
+          </div>
+        </div>
+
+        <!-- NIEUWBOUWWONINGEN AFMONTAGE -->
+        <div class="project-full-card">
+          <div class="project-full-img" style="height:300px;">
+            <img src="images/img25.jpg" alt="Afmontage nieuwbouwwoningen elektra" loading="lazy">
+            <div class="project-tag">Nieuwbouw</div>
+          </div>
+          <div class="project-full-body">
+            <h3>Afmontage 3 nieuwbouwwoningen</h3>
+            <div class="case-row"><span class="case-label">Project</span><span class="case-value">Volledige elektrotechnische afmontage van 3 nieuwbouwwoningen: alle elektra aangesloten, getest en opgeleverd conform de geldende normen.</span></div>
+            <div class="case-row"><span class="case-label">Aanpak</span><span class="case-value">Installaties voorbereid voor toekomstige laadpalen, zonnepanelen al aangelegd. Afwerkkapjes worden na schilderwerk geplaatst.</span></div>
+            <div class="case-row case-result"><span class="case-label">Resultaat</span><span class="case-value">Veilig, gebruiksklaar én toekomstbestendig — bewoners kunnen zorgeloos genieten van hun nieuwe woning.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div><!-- /projecten -->
+
+<!-- ===================== PAGE: OVER ONS ===================== -->
+<div class="page" id="page-over-ons">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('images/img26.jpg')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="section-label">Wie zijn wij</span>
+      <h1>Over H&amp;S Elektrotechniek</h1>
+      <p>Een betrouwbaar elektrotechnisch bedrijf uit Dongen, gedreven door vakmanschap en persoonlijke service.</p>
+    </div>
+  </div>
+  <div class="about-intro">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <h2>Betrouwbaar vakmanschap, persoonlijk contact</h2>
+          <p>H&S Elektrotechniek is een erkend elektrotechnisch bedrijf gevestigd in Dongen. Wij werken voor particulieren en bedrijven in Noord-Brabant en omgeving en staan bekend om ons vakmanschap, betrouwbaarheid en persoonlijke aanpak.</p>
+          <p>Of u nu een kleine storing wilt laten verhelpen, uw woning wilt voorzien van moderne LED-verlichting, zonnepanelen wilt laten installeren of een compleet nieuwbouwproject wilt realiseren — wij pakken elk project met dezelfde zorgvuldigheid aan.</p>
+          <p>Wij werken transparant: u weet van tevoren wat u kunt verwachten qua werkzaamheden, planning en kosten. Geen verrassingen achteraf.</p>
+          <div style="margin-top:28px;display:flex;gap:24px;flex-wrap:wrap;">
+            <div><div style="font-family:var(--font-d);font-size:26px;font-weight:800;color:var(--navy);">KvK</div><div style="font-size:13px;color:var(--text-light);">90072332</div></div>
+            <div><div style="font-family:var(--font-d);font-size:26px;font-weight:800;color:var(--navy);">BTW</div><div style="font-size:13px;color:var(--text-light);">NL865201754B01</div></div>
+            <div><div style="font-family:var(--font-d);font-size:26px;font-weight:800;color:var(--navy);">Ma–Za</div><div style="font-size:13px;color:var(--text-light);">06:00–18:00</div></div>
+          </div>
+        </div>
+        <div class="about-photo reveal">
+          <img src="images/img26.jpg" alt="H&S Elektrotechniek team" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-values">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;">
+        <span class="section-label">Onze kernwaarden</span>
+        <h2 class="section-title">Wat ons drijft</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card reveal"><div class="value-icon">⚡</div><h3>Veiligheid</h3><p>Veiligheid staat altijd voorop. Wij werken conform de geldende normen en laten geen enkel risico bestaan.</p></div>
+        <div class="value-card reveal"><div class="value-icon">🎯</div><h3>Kwaliteit</h3><p>Vakkundig werk, kwalitatieve materialen en wij staan achter elke installatie die wij uitvoeren.</p></div>
+        <div class="value-card reveal"><div class="value-icon">🤝</div><h3>Betrouwbaarheid</h3><p>Afspraken worden nagekomen, prijsopgaves zijn helder en communicatie is altijd eerlijk en direct.</p></div>
+        <div class="value-card reveal"><div class="value-icon">🌱</div><h3>Duurzaamheid</h3><p>Wij denken actief mee over duurzame keuzes — van LED-verlichting tot zonnepanelen.</p></div>
+      </div>
+    </div>
+  </div>
+  <!-- Team photo full width -->
+  <section style="padding:80px 0;background:var(--white);">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center;margin-bottom:36px;">
+        <span class="section-label">Ons team</span>
+        <h2 class="section-title">Klaar voor uw opdracht</h2>
+      </div>
+      <div class="team-visual reveal">
+        <img src="images/img26.jpg" alt="Het volledige H&S Elektrotechniek team" loading="lazy">
+      </div>
+    </div>
+  </section>
+</div><!-- /over-ons -->
+
+
+<!-- ===================== PAGE: CONTACT ===================== -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('images/img08.jpg')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="section-label">Neem contact op</span>
+      <h1>Wij helpen u graag</h1>
+      <p>Vraag, afspraak of offerte? Neem direct contact op — wij reageren snel.</p>
+    </div>
+  </div>
+  <div class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="contact-info">
+            <h2>Direct bereikbaar</h2>
+            <p>Kies de contactmethode die voor u het beste werkt. Wij reageren snel en helpen u graag verder.</p>
+          </div>
+          <div class="contact-details">
+            <div class="contact-detail"><div class="cd-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div><div><div class="cd-label">Telefoon</div><div class="cd-value"><a href="tel:0636277154">06-362 771 54</a></div><div class="cd-value"><a href="tel:0615699409">06-156 994 09</a></div></div></div>
+            <div class="contact-detail"><div class="cd-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="cd-label">E-mail</div><div class="cd-value"><a href="mailto:info@hstechniek.com">info@hstechniek.com</a></div></div></div>
+            <div class="contact-detail"><div class="cd-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="cd-label">Adres</div><div class="cd-value">De Els 14<br>5107 RK Dongen</div></div></div>
+            <div class="contact-detail"><div class="cd-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div><div class="cd-label">Openingstijden</div><div class="cd-value">Maandag t/m zaterdag<br>06:00 – 18:00</div></div></div>
+            <div class="contact-detail"><div class="cd-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div><div><div class="cd-label">Instagram</div><div class="cd-value"><a href="https://www.instagram.com/hselektrotechniek/" target="_blank" rel="noopener">@hselektrotechniek</a></div></div></div>
+            <div class="contact-detail"><div class="cd-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="cd-label">LinkedIn</div><div class="cd-value"><a href="https://www.linkedin.com/company/h-s-elektrotechniek/" target="_blank" rel="noopener">H&amp;S Elektrotechniek</a></div></div></div>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <div class="form-title">Stuur ons een bericht</div>
+          <div id="contact-form-success" class="form-success">✓ Bedankt! Uw bericht is ontvangen. Wij nemen spoedig contact op.</div>
+          <form id="contact-form" onsubmit="submitContactForm(event)" novalidate>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label" for="cf-naam">Naam *</label><input class="form-input" type="text" id="cf-naam" placeholder="Uw naam" required><div class="form-error" id="cf-naam-err">Vul uw naam in.</div></div>
+              <div class="form-group"><label class="form-label" for="cf-tel">Telefoon</label><input class="form-input" type="tel" id="cf-tel" placeholder="06-..."></div>
+            </div>
+            <div class="form-group"><label class="form-label" for="cf-email">E-mail *</label><input class="form-input" type="email" id="cf-email" placeholder="uwmail@voorbeeld.nl" required><div class="form-error" id="cf-email-err">Vul een geldig e-mailadres in.</div></div>
+            <div class="form-group"><label class="form-label" for="cf-onderwerp">Onderwerp</label><select class="form-select" id="cf-onderwerp"><option value="">Kies een onderwerp</option><option>Offerte aanvragen</option><option>Storing / spoedmelding</option><option>Vraag over diensten</option><option>Overig</option></select></div>
+            <div class="form-group"><label class="form-label" for="cf-bericht">Bericht *</label><textarea class="form-textarea" id="cf-bericht" placeholder="Beschrijf uw situatie of vraag..." required></textarea><div class="form-error" id="cf-bericht-err">Vul een bericht in.</div></div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Bericht versturen →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="map-wrap">
+    <div class="container">
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2467.7!2d4.9600!3d51.6270!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c6a18c4b3a9e79%3A0x1!2sDe%20Els%2014%2C%205107%20RK%20Dongen!5e0!3m2!1snl!2snl!4v1700000000000" loading="lazy" title="Locatie H&S Elektrotechniek, Dongen" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</div><!-- /contact -->
+
+
+<!-- ===================== PAGE: OFFERTE ===================== -->
+<div class="page" id="page-offerte">
+  <div class="page-hero" style="padding:120px 0 60px;">
+    <div class="page-hero-bg" style="background-image:url('images/img03.jpg')"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="section-label">Vrijblijvend</span>
+      <h1>Offerte aanvragen</h1>
+      <p>Vul de wizard in — wij reageren binnen één werkdag met een passend voorstel.</p>
+    </div>
+  </div>
+  <div class="wizard-section">
+    <div class="container">
+      <div class="wizard-card">
+        <div class="wizard-header">
+          <h2>Uw aanvraag</h2>
+          <div class="progress-bar" id="progress-bar">
+            <div class="progress-step active" id="ps1"><div class="step-circle">1</div><span class="step-label">Type opdracht</span></div>
+            <div class="step-line"></div>
+            <div class="progress-step" id="ps2"><div class="step-circle">2</div><span class="step-label">Projectdetails</span></div>
+            <div class="step-line"></div>
+            <div class="progress-step" id="ps3"><div class="step-circle">3</div><span class="step-label">Uw gegevens</span></div>
+          </div>
+        </div>
+        <div class="wizard-body">
+          <div class="wizard-step active" id="wiz-step-1">
+            <div class="wizard-step-title">Welk type opdracht heeft u?</div>
+            <div class="wizard-step-sub">Selecteer de dienst die het beste past bij uw situatie.</div>
+            <div class="service-options" id="service-options">
+              <label class="service-option" onclick="selectOption(this)"><input type="radio" name="service" value="Storingen & Reparaties"><div class="opt-icon">⚡</div><div class="opt-label">Storing / Reparatie</div></label>
+              <label class="service-option" onclick="selectOption(this)"><input type="radio" name="service" value="Verlichting & LED"><div class="opt-icon">💡</div><div class="opt-label">Verlichting</div></label>
+              <label class="service-option" onclick="selectOption(this)"><input type="radio" name="service" value="Zonnepanelen"><div class="opt-icon">☀️</div><div class="opt-label">Zonnepanelen</div></label>
+              <label class="service-option" onclick="selectOption(this)"><input type="radio" name="service" value="Keuring & Inspectie"><div class="opt-icon">🔍</div><div class="opt-label">Keuring</div></label>
+              <label class="service-option" onclick="selectOption(this)"><input type="radio" name="service" value="Nieuwbouw & Renovatie"><div class="opt-icon">🏗️</div><div class="opt-label">Nieuwbouw / Renovatie</div></label>
+              <label class="service-option" onclick="selectOption(this)"><input type="radio" name="service" value="Anders"><div class="opt-icon">💬</div><div class="opt-label">Anders / Weet ik niet</div></label>
+            </div>
+            <div class="form-error" id="wiz1-err">Selecteer een dienst om verder te gaan.</div>
+            <div class="wizard-nav"><div></div><button class="btn btn-primary" onclick="wizNext(1)">Volgende stap →</button></div>
+          </div>
+          <div class="wizard-step" id="wiz-step-2">
+            <div class="wizard-step-title">Vertel ons meer over het project</div>
+            <div class="wizard-step-sub">Hoe meer details u deelt, hoe beter wij u kunnen helpen.</div>
+            <div class="form-group"><label class="form-label" for="wiz-omschrijving">Omschrijving *</label><textarea class="form-textarea" id="wiz-omschrijving" placeholder="Beschrijf kort de situatie..." style="min-height:120px;" required></textarea><div class="form-error" id="wiz2-omschr-err">Vul een omschrijving in.</div></div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label" for="wiz-locatie">Locatie</label><input class="form-input" type="text" id="wiz-locatie" placeholder="Stad of adres"></div>
+              <div class="form-group"><label class="form-label" for="wiz-timing">Gewenste planning</label><select class="form-select" id="wiz-timing"><option value="">Kies een optie</option><option>Zo snel mogelijk</option><option>Binnen 1 week</option><option>Binnen 1 maand</option><option>Flexibel / Overlegbaar</option></select></div>
+            </div>
+            <div class="form-group"><label class="form-label" for="wiz-type">Voor wie is de opdracht?</label><select class="form-select" id="wiz-type"><option value="">Kies een optie</option><option>Particulier – woning</option><option>Zakelijk – bedrijfspand</option><option>Aannemer / Project</option><option>Anders</option></select></div>
+            <div class="wizard-nav"><button class="btn-wiz-prev" onclick="wizPrev(2)">← Vorige</button><button class="btn btn-primary" onclick="wizNext(2)">Volgende stap →</button></div>
+          </div>
+          <div class="wizard-step" id="wiz-step-3">
+            <div class="wizard-step-title">Uw contactgegevens</div>
+            <div class="wizard-step-sub">Wij nemen binnen één werkdag contact op.</div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label" for="wiz-naam">Naam *</label><input class="form-input" type="text" id="wiz-naam" placeholder="Uw naam" required><div class="form-error" id="wiz3-naam-err">Vul uw naam in.</div></div>
+              <div class="form-group"><label class="form-label" for="wiz-tel">Telefoon *</label><input class="form-input" type="tel" id="wiz-tel" placeholder="06-..." required><div class="form-error" id="wiz3-tel-err">Vul een telefoonnummer in.</div></div>
+            </div>
+            <div class="form-group"><label class="form-label" for="wiz-email">E-mailadres *</label><input class="form-input" type="email" id="wiz-email" placeholder="uwmail@voorbeeld.nl" required><div class="form-error" id="wiz3-email-err">Vul een geldig e-mailadres in.</div></div>
+            <div class="form-group"><label class="form-label" for="wiz-opmerking">Aanvullende opmerkingen</label><textarea class="form-textarea" id="wiz-opmerking" placeholder="Eventuele aanvullingen..." style="min-height:90px;"></textarea></div>
+            <div class="wizard-nav"><button class="btn-wiz-prev" onclick="wizPrev(3)">← Vorige</button><button class="btn btn-primary" onclick="wizSubmit()">Aanvraag verzenden →</button></div>
+          </div>
+          <div class="wizard-success" id="wiz-success">
+            <div class="success-icon">✅</div>
+            <h3>Aanvraag ontvangen!</h3>
+            <p>Bedankt voor uw aanvraag. Wij nemen zo snel mogelijk, uiterlijk binnen één werkdag, contact op.</p>
+            <p style="font-size:14px;color:var(--text-light);">Liever bellen? <a href="tel:0636277154" style="color:var(--blue);font-weight:600;">06-36277154</a></p>
+            <button class="btn btn-primary" onclick="resetWizard()" style="margin-top:16px;">Nieuwe aanvraag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /offerte -->
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo"><img src="images/img01.png" alt="H&S Elektrotechniek" style="height:40px;background:white;border-radius:6px;padding:4px 8px;margin-bottom:16px;"></div>
+        <p>Uw betrouwbare elektricien in Dongen en omgeving. Vakkundig, transparant en persoonlijk.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/hselektrotechniek/" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/h-s-elektrotechniek/" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Navigatie</h4><ul><li><a href="#" onclick="showPage('home')">Home</a></li><li><a href="#" onclick="showPage('diensten')">Diensten</a></li><li><a href="#" onclick="showPage('projecten')">Projecten</a></li><li><a href="#" onclick="showPage('over-ons')">Over ons</a></li><li><a href="#" onclick="showPage('contact')">Contact</a></li><li><a href="#" onclick="showPage('offerte')">Offerte aanvragen</a></li></ul></div>
+      <div class="footer-col"><h4>Diensten</h4><ul><li><a href="#" onclick="showPage('diensten')">Storingen &amp; Reparaties</a></li><li><a href="#" onclick="showPage('diensten')">Verlichting &amp; LED</a></li><li><a href="#" onclick="showPage('diensten')">Zonnepanelen</a></li><li><a href="#" onclick="showPage('diensten')">Keuringen</a></li><li><a href="#" onclick="showPage('diensten')">Nieuwbouw &amp; Renovatie</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:0636277154">06-362 771 54</a></li><li><a href="tel:0615699409">06-156 994 09</a></li><li><a href="mailto:info@hstechniek.com">info@hstechniek.com</a></li><li style="color:rgba(255,255,255,0.5);">De Els 14, 5107 RK Dongen</li><li style="color:rgba(255,255,255,0.5);">Ma–Za: 06:00–18:00</li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 H&S Elektrotechniek · KvK 90072332 · BTW NL865201754B01</span>
+      <span>Dongen, Noord-Brabant</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));const t=document.getElementById('page-'+p);if(t){t.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});initReveal();}}
+const navbar=document.getElementById('navbar');window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>40));
+const navToggle=document.getElementById('nav-toggle'),mobileMenu=document.getElementById('mobile-menu');
+navToggle.addEventListener('click',()=>{const o=mobileMenu.classList.toggle('open');navToggle.classList.toggle('open',o);});
+function closeMobileMenu(){mobileMenu.classList.remove('open');navToggle.classList.remove('open');}
+function initReveal(){const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.page.active .reveal').forEach((el,i)=>{el.style.transitionDelay=(i%6)*0.08+'s';obs.observe(el);});}
+document.addEventListener('DOMContentLoaded',initReveal);
+function toggleFaq(btn){const item=btn.closest('.faq-item'),isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+function showToast(msg,type='default'){const c=document.getElementById('toast-container'),t=document.createElement('div');t.className='toast '+type;t.textContent=msg;c.appendChild(t);setTimeout(()=>t.remove(),3200);}
+function initCookies(){if(!localStorage.getItem('hs_cookies_choice'))document.getElementById('cookie-banner').style.display='flex';}
+function acceptCookies(){localStorage.setItem('hs_cookies_choice','accepted');document.getElementById('cookie-banner').style.display='none';showToast('Cookievoorkeur opgeslagen.','success');}
+function declineCookies(){localStorage.setItem('hs_cookies_choice','declined');document.getElementById('cookie-banner').style.display='none';}
+initCookies();
+function submitContactForm(e){e.preventDefault();let v=true;const naam=document.getElementById('cf-naam'),email=document.getElementById('cf-email'),bericht=document.getElementById('cf-bericht');[naam,email,bericht].forEach(el=>el.classList.remove('error'));['cf-naam-err','cf-email-err','cf-bericht-err'].forEach(id=>document.getElementById(id).classList.remove('visible'));if(!naam.value.trim()){naam.classList.add('error');document.getElementById('cf-naam-err').classList.add('visible');v=false;}if(!email.value.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){email.classList.add('error');document.getElementById('cf-email-err').classList.add('visible');v=false;}if(!bericht.value.trim()){bericht.classList.add('error');document.getElementById('cf-bericht-err').classList.add('visible');v=false;}if(!v){showToast('Controleer de verplichte velden.','error');return;}document.getElementById('contact-form').style.display='none';document.getElementById('contact-form-success').classList.add('visible');showToast('Bericht verzonden! Wij nemen snel contact op.','success');}
+function selectOption(el){document.querySelectorAll('.service-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');document.getElementById('wiz1-err').classList.remove('visible');}
+function setProgressStep(step){for(let i=1;i<=3;i++){const ps=document.getElementById('ps'+i);ps.classList.remove('active','done');if(i<step)ps.classList.add('done');else if(i===step)ps.classList.add('active');}}
+function wizNext(from){if(from===1){const sel=document.querySelector('.service-option.selected input');if(!sel){document.getElementById('wiz1-err').classList.add('visible');showToast('Selecteer eerst een dienst.','error');return;}}if(from===2){const o=document.getElementById('wiz-omschrijving');o.classList.remove('error');document.getElementById('wiz2-omschr-err').classList.remove('visible');if(!o.value.trim()){o.classList.add('error');document.getElementById('wiz2-omschr-err').classList.add('visible');showToast('Vul een omschrijving in.','error');return;}}document.getElementById('wiz-step-'+from).classList.remove('active');document.getElementById('wiz-step-'+(from+1)).classList.add('active');setProgressStep(from+1);}
+function wizPrev(from){document.getElementById('wiz-step-'+from).classList.remove('active');document.getElementById('wiz-step-'+(from-1)).classList.add('active');setProgressStep(from-1);}
+function wizSubmit(){const naam=document.getElementById('wiz-naam'),tel=document.getElementById('wiz-tel'),email=document.getElementById('wiz-email');let v=true;[naam,tel,email].forEach(el=>el.classList.remove('error'));['wiz3-naam-err','wiz3-tel-err','wiz3-email-err'].forEach(id=>document.getElementById(id).classList.remove('visible'));if(!naam.value.trim()){naam.classList.add('error');document.getElementById('wiz3-naam-err').classList.add('visible');v=false;}if(!tel.value.trim()){tel.classList.add('error');document.getElementById('wiz3-tel-err').classList.add('visible');v=false;}if(!email.value.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){email.classList.add('error');document.getElementById('wiz3-email-err').classList.add('visible');v=false;}if(!v){showToast('Controleer de verplichte velden.','error');return;}document.getElementById('wiz-step-3').classList.remove('active');document.getElementById('wiz-success').classList.add('visible');setProgressStep(4);showToast('Aanvraag verzonden! Wij nemen spoedig contact op.','success');}
+function resetWizard(){document.querySelectorAll('.wizard-step').forEach(s=>s.classList.remove('active'));document.getElementById('wiz-step-1').classList.add('active');document.getElementById('wiz-success').classList.remove('visible');document.querySelectorAll('.service-option').forEach(o=>o.classList.remove('selected'));['wiz-omschrijving','wiz-locatie','wiz-naam','wiz-tel','wiz-email','wiz-opmerking'].forEach(id=>{const el=document.getElementById(id);if(el){el.value='';el.classList.remove('error');}});setProgressStep(1);}
+</script>
+</body>
+</html>
